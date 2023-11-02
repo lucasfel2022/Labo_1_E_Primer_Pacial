@@ -1,4 +1,7 @@
-from biblioteca import(menu_opciones
-)
+# El código está importando la función `menu_opciones` del módulo `app` y la clase `Equipo` de
+# el módulo `Equipo`. Luego llama a la función `menu_opciones` con el argumento `equipo`.
+from app import(menu_opciones)
+from Equipo import *
+menu_opciones(equipo)
 
-menu_opciones()
+
