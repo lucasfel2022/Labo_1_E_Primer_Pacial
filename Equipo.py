@@ -58,7 +58,7 @@ class Equipo():
         for i, jugador in enumerate(equipo.jugadores):
             print(f"{i+1} . {jugador['nombre']} - {jugador['posicion']}")
         try:
-            player =input('/n Numero del 1 al 12 /n')
+            player =input(' Numero del 1 al 12: \n')
             if re.match(r'^[0-9]{1,2}$', player) and 0 <= int(player) < len(equipo.jugadores):
                 jugador_encontrado = equipo.jugadores[int(player) -1]
                 print(jugador_encontrado)
@@ -398,7 +398,7 @@ def quick_sort_posiciones(dict):
                     if x['posicion']> pivote['posicion']
                 ]
                 return quick_sort_posiciones(greater) + [pivote] + quick_sort_posiciones(less)             
-            
+     
             
 equipo = Equipo('Primer_Parcial__1_E.py//dream_team.json')
 

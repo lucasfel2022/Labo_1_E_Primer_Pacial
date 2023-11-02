@@ -25,7 +25,7 @@ def menu_opciones(equipo:Equipo):
                 case '1':
                     equipo.inicializar_equipo()
                 case '2':
-                    equipo.mostrar_estadistica_jug_y_guardar_en_csv(equipo)
+                    equipo.mostrar_estadistica_jug_y_guardar_en_csv()
                 case '3':
                     lista_de_jugadores_nombres()
                     while True:
