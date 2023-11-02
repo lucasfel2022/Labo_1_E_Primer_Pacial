@@ -15,8 +15,9 @@ def menu_opciones(equipo:Equipo):
         print("|5. Buscar jugador por nombre y mostrar si es miembro del Salón de la Fama del Baloncesto.                                    |")
         print("|6. Mostrar el jugador con el mayor numero de rebotes totales de todo el Dream Team.                                          |")
         print("|7. Ordenamiento de la lista de mayor a menor.                                                                                |")
-        print("|8. Sumar los datos de los jugadores de robos totales más los bloqueos totales (submenu)                                                 |")
-        print("|9. Salir |\n")
+        print("|8. Sumar los datos de los jugadores de robos totales más los bloqueos totales (submenu)                                      |")
+        print("|9. Guardar posiciones en el partido.                                                                                          |)")
+        print("|10. Saliendo.                                                                                                                 |\n")
         opcion = input("Seleccione una opción: ")
 #se valida la opcion del usuario
         if validar_opcion_numero(opcion):
@@ -55,6 +56,11 @@ def menu_opciones(equipo:Equipo):
                         case '2':
                             mostrar_jugadores_ordenados_con_porcentaje()
                         case '3':
-                            print("Proximamente...\n")      
+                            print("Proximamente...\n")   
+                case '9':
+                    guardar_posiciones_sqlite()
+                case '10':
+                    print("Saliendo...\n")
+                    break
         else:
             print("Opción no válida. Por favor, elija una opción válida.")  

@@ -2,6 +2,7 @@
 # el módulo `Equipo`. Luego llama a la función `menu_opciones` con el argumento `equipo`.
 from app import(menu_opciones)
 from Equipo import *
-menu_opciones(equipo)
+if __name__ == '__main__':
+    menu_opciones(equipo)
 
 

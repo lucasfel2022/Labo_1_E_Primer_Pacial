@@ -339,6 +339,68 @@ def quick_sort(dict):
                     for x in dict[1:]
                     if x['estadisticas']['puntos_totales']> pivote['estadisticas']['puntos_totales']
                 ]
-                return quick_sort(greater) + [pivote] + quick_sort(less)       
-        
+                return quick_sort(greater) + [pivote] + quick_sort(less)     
+            
+  
+def guardar_posiciones_sqlite():
+   # Conecta a la base de datos SQLite
+        conn = sqlite3.connect("Posiciones.db")
+        cursor = conn.cursor()
+
+        # Crea una tabla si no existe
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS posiciones (
+        nombre_posicion TEXT
+        )
+    '''
+        )
+        posiciones_validas = ['Base', 'Escolta', 'Alero', 'Ala-Pívot', 'Pívot']
+        # Ordena la lista de jugadores con Quick Sort
+        try:
+            # Inserta los datos en la tabla
+            for posicion in posiciones_validas:
+                cursor.execute(
+                'INSERT INTO posiciones (nombre_posicion) VALUES (?)',(posicion,),
+                )
+            # Guarda los cambios en la base de datos
+            
+
+            print("Lista de posiciones guardada en SQLite.")
+        except Exception as e:
+            print(f"Error al guardar la lista de posiciones en SQLite: {str(e)}")
+        finally:
+            # Cierra la conexión a la base de datos
+            conn.commit()
+            conn.close()
+            
+def quick_sort_posiciones(dict):
+            """
+     La función `quick_sort` implementa el algoritmo de clasificación rápida para ordenar una lista de diccionarios según
+     el valor de la clave 'puntos_totales' en el diccionario 'estadisticas'.
+    
+      El parámetro `arr` es una lista de diccionarios. Cada diccionario representa una entrada de datos.
+     y contiene una clave llamada 'estadisticas'. El valor de 'estadisticas' es otro diccionario que
+     contiene una clave llamada 'puntos_totales'. El valor de 'puntos_totales'
+     :return: una versión ordenada de la matriz de entrada 'arr' usando el algoritmo de clasificación rápida.
+            """
+            if len(dict) <= 1:
+                return dict
+            else:
+                pivote = dict[0]
+                less = [
+                    x
+                    for x in dict[1:]
+                    if x['posicion'] <= pivote['posicion']
+                ]
+                greater = [
+                    x
+                    for x in dict[1:]
+                    if x['posicion']> pivote['posicion']
+                ]
+                return quick_sort_posiciones(greater) + [pivote] + quick_sort_posiciones(less)             
+            
+            
 equipo = Equipo('Primer_Parcial__1_E.py//dream_team.json')
+
+
+
