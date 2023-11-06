@@ -45,7 +45,7 @@ def menu_opciones(equipo:Equipo):
                 case '6':
                     equipo.calcular_maximo_rebotes_totales()
                 case '7':
-                    equipo.ordenamiento_mayor_a_menor_guardar_json_y_sqlite()
+                    equipo.ordenamiento_mayor_a_menor_guardar_json_csv_y_sqlite()
                 case '8':
                     sub_menu_punto_8()
                     option = input("\n Ingrese una opcion del sub menu:")

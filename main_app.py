@@ -4,5 +4,3 @@ from app import(menu_opciones)
 from Equipo import *
 if __name__ == '__main__':
     menu_opciones(equipo)
-
-

@@ -68,7 +68,6 @@ class Equipo():
             print("Entrada inválida. Por favor, ingrese un número entero.")
         respuesta = input("¿Desea guardar los datos en un archivoo csv? s/n\n").lower()
         if respuesta == "s":
-            while True:
                 nombre_archivo = input("Ingrese el nombre del archivo csv: ")
 
                 if nombre_archivo.endswith(".csv"):
@@ -93,8 +92,8 @@ class Equipo():
                     with open(f"{nombre_archivo}.csv", mode="w", newline="") as file:
                         writer = csv.writer(file)
                         writer.writerow(headers)
-                    writer.writerow(
-                    [
+                        writer.writerow(
+                        [
                         jugador_encontrado['nombre'],
                         jugador_encontrado['posicion'],
                         jugador_encontrado['estadisticas'] ['temporadas'],
@@ -109,10 +108,9 @@ class Equipo():
                         jugador_encontrado['estadisticas']['porcentaje_tiros_de_campo'],
                         jugador_encontrado['estadisticas']['porcentaje_tiros_libres'],
                         jugador_encontrado['estadisticas']['porcentaje_tiros_triples'],
-                    ]
-                )
-        else:
-         print("El archivo no se guardo")  # Sale del bucle while
+                    ])
+                else:
+                    print("El archivo no se guardo")  # Sale del bucle while
     
     def buscar_jugador_por_indice(indice):
         """
@@ -185,7 +183,7 @@ class Equipo():
 #ordena de mayor a menor, recibe un euquipo de calse Equipo y devuelve la lista ordenada
 #el metod sorted, recibe el dato de tipo 'Equipo' donde tengo mi lista jugdaores, paso parametros a buscar y me la ordena con el
 #revers.
-    def ordenamiento_mayor_a_menor_guardar_json_y_sqlite(self):
+    def ordenamiento_mayor_a_menor_guardar_json_csv_y_sqlite(self):
         """
        La función ordena una lista de diccionarios en orden descendente según una clave específica, solicita
          el usuario guarda los datos en un archivo CSV, le solicita que guarde la lista ordenada en un JSON
@@ -196,11 +194,41 @@ class Equipo():
         print(f"La lista se ha ordernado segun los criterios: {lista_ordenada}")
         respuesta_csv = input("¿Desea guardar los datos en un archivoo csv? s/n\n").lower()
         if validar_opcion_respuesta(respuesta_csv) is True:
-            while True:
                 nombre_archivo = input("Ingrese el nombre del archivo csv: ")
                 if nombre_archivo.endswith(".csv"):
         # El nombre del archivo termina en ".csv", es válido
                     print("Nombre de archivo válido:", nombre_archivo)
+                    if nombre_archivo.endswith(".csv"):
+                 # El nombre del archivo termina en ".csv", es válido
+                        headers = ["nombre",
+                        "posicion",
+                        "temporadas",
+                        "puntos_totales",
+                        "promedio_puntos_por_partido",
+                        "rebotes_totales",
+                        "promedio_rebotes_por_partido",
+                        "asistencias_totales",
+                        "promedio_asistencias_por_partido",
+                        "robos_totales",
+                        "bloqueos_totales",
+                        "porcentaje_tiros_de_campo",
+                        "porcentaje_tiros_libres",
+                        "porcentaje_tiros_triples",]
+                    
+                        with open(f"{nombre_archivo}.csv", mode="w", newline="") as file:
+                            writer = csv.writer(file)
+                            writer.writerow(headers)
+                            for jugador in lista_ordenada:
+                                nombre = jugador["nombre"]
+                                posicion = jugador["posicion"]
+                                estadisticas = jugador["estadisticas"]
+                                temporada = estadisticas["temporadas"]
+                                puntos_totales = estadisticas["puntos_totales"]
+                                rebotes_totales = estadisticas["rebotes_totales"]
+                                asistencias_totales = estadisticas["asistencias_totales"]
+                                robos_totales = estadisticas["robos_totales"]
+                                bloqueos_totales = estadisticas["bloqueos_totales"]
+                                writer.writerow([nombre, posicion, temporada, puntos_totales, rebotes_totales, asistencias_totales, robos_totales, bloqueos_totales])
         else:
             print("El archivo no se guardo")  # Sale del bucle while
         respuesta_json = input("\n ¿Desea guardar la lista ordenada en un archivo json? s/n : ")
@@ -277,10 +305,15 @@ def guardar_lista_jugadores_en_sqlite():
         la mesa.
         """
         # Conecta a la base de datos SQLite
+       # El código anterior establece una conexión a un archivo de base de datos SQLite llamado
+       # "Dream_Team.db" y crea un objeto de cursor para ejecutar consultas SQL en la base de datos.
         conn = sqlite3.connect("Dream_Team.db")
         cursor = conn.cursor()
 
         # Crea una tabla si no existe
+        # El código anterior crea una tabla llamada "jugadores" en una base de datos. La tabla tiene
+        # tres columnas: "nombre" de tipo TEXT, "posicion" de tipo TEXT y "puntos_totales" de tipo
+        # FLOAT. Si la tabla ya existe, el código no la volverá a crear.
         cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS jugadores (
@@ -290,6 +323,8 @@ def guardar_lista_jugadores_en_sqlite():
             )
         """
         )
+       # El código anterior ordena la lista de jugadores en el objeto "equipo" usando el algoritmo de
+       # clasificación rápida.
         jugadores_ordenados = quick_sort(equipo.jugadores)
 
         # Ordena la lista de jugadores con Quick Sort
@@ -297,6 +332,13 @@ def guardar_lista_jugadores_en_sqlite():
 
         try:
             # Inserta los datos en la tabla
+            # El código anterior inserta datos en una tabla llamada "jugadores" en una base de datos
+            # usando el módulo SQLite3 en Python. Está iterando sobre una lista de jugadores llamada
+            # "jugadores_ordenados" y para cada jugador, está ejecutando una instrucción SQL INSERT
+            # para insertar su nombre, posición y puntos totales en la tabla de "jugadores". Los
+            # valores de cada jugador se obtienen del diccionario del jugador, específicamente de la
+            # clave 'nombre' para el nombre, clave 'posicion' para la posición y diccionario
+            # 'estadisticas' para la clave 'puntos_totales'
             for jugador in jugadores_ordenados:
                 cursor.execute(
                     """
@@ -325,6 +367,12 @@ def quick_sort(dict):
      contiene una clave llamada 'puntos_totales'. El valor de 'puntos_totales'
      :return: una versión ordenada de la matriz de entrada 'arr' usando el algoritmo de clasificación rápida.
             """
+            # El código anterior implementa el algoritmo de clasificación rápida para ordenar una
+            # lista de diccionarios según el valor de la clave 'puntos_totales' en el diccionario
+            # 'estadisticas' dentro de cada diccionario. El código divide recursivamente la lista en
+            # dos sublistas, una que contiene elementos con valores mayores que el pivote y la otra
+            # que contiene elementos con valores menores o iguales al pivote. Luego combina las
+            # sublistas ordenadas con el elemento pivote para producir la lista ordenada final.
             if len(dict) <= 1:
                 return dict
             else:
